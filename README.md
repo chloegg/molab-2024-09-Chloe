@@ -1,3 +1,4 @@
-# [01-Playground](https://github.com/mobilelabclass-itp/01-Playground)
+# [Molab-2024-09-Chloe](https://github.com/chloegg/molab-2024-09-Chloe/tree/main)
 
-Xcode Playground pages for exploring Swift programming fundamentals.
+## Week 1
+
