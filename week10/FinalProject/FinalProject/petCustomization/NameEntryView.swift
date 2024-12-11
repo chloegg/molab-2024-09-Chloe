@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NameEntryView: View {
+    @Environment(\.dismiss) private var dismiss // Allows dismissing this view
     @State private var name: String = ""
     
     var body: some View {
@@ -41,6 +42,7 @@ struct NameEntryView: View {
                 .padding(.top, 17)
                 
                 Button(action: {
+                    dismiss()
                 }) {
                     Text("back")
                         .font(.custom("Saira Stencil One", size: 20))
@@ -54,8 +56,7 @@ struct NameEntryView: View {
                 }
                 .padding(.top, 109)
                 
-                Button(action: {
-                }) {
+                NavigationLink(destination: HomeScreen().navigationBarHidden(true)) {
                     Text("continue")
                         .font(.custom("Saira Stencil One", size: 20))
                         .foregroundColor(.black)
@@ -72,9 +73,8 @@ struct NameEntryView: View {
             .padding(.bottom, 45)
         }
         .background(Color(red: 206/255, green: 218/255, blue: 128/255))
-        
-        .navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true) // Hides the back button
+        .navigationBarHidden(true) // Hides the navigation bar
     }
 }
 
@@ -88,7 +88,6 @@ struct UnderlineTextFieldStyle: TextFieldStyle {
         }
     }
 }
-
 
 struct NameEntryView_Previews: PreviewProvider {
     static var previews: some View {

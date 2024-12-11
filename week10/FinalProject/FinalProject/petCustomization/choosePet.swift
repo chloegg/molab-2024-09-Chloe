@@ -81,13 +81,21 @@ struct DigiPetSelectionView: View {
                         }
                         .buttonStyle(PlainButtonStyle())
                         
-                        Button(action: {
-                            print("Animal selected!")
-                        }) {
+                   
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(Color(red: 231/255, green: 244/255, blue: 189/255))
                                 .frame(width: 120, height: 120)
-                        }
+                                .overlay(
+                                    VStack {
+                                        Image(systemName: "lock.fill")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 40, height: 40)
+                                            .foregroundColor(.black.opacity(0.3)) // Lower opacity
+                                    }
+                                )
+    
+                        .buttonStyle(PlainButtonStyle())
                     }
                     
                     Spacer()

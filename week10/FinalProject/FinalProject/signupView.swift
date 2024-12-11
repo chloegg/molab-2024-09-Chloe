@@ -14,6 +14,7 @@ struct SignupView: View {
     @State private var name: String = ""
     @State private var age: String = ""
     @State private var gender: String = ""
+    @State private var navigateToChoosePet = false // State to control navigation
     
     var body: some View {
         ZStack {
@@ -21,7 +22,6 @@ struct SignupView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 20) {
-                // Title
                 HStack {
                     Text("Profile")
                         .font(.custom("Saira Stencil One", size: 36))
@@ -39,6 +39,7 @@ struct SignupView: View {
                     
                     TextField("Enter username", text: $username)
                         .padding()
+                        .font(.custom("Saira Stencil One", size: 14))
                         .frame(height: 50)
                         .background(Color(red: 0.914, green: 0.914, blue: 0.914))
                         .border(Color.black, width: 1)
@@ -49,6 +50,7 @@ struct SignupView: View {
                     
                     SecureField("Enter password", text: $password)
                         .padding()
+                        .font(.custom("Saira Stencil One", size: 14))
                         .frame(height: 50)
                         .background(Color(red: 0.914, green: 0.914, blue: 0.914))
                         .border(Color.black, width: 1)
@@ -80,9 +82,13 @@ struct SignupView: View {
                             .shadow(color: Color.black.opacity(0.25), radius: 4, y: 4)
                     }
                     
-                    NavigationLink(destination: DigiPetSelectionView()
-                        .navigationBarBackButtonHidden(true)
-                        .navigationBarHidden(true)) {
+                    NavigationLink(
+                        destination: DigiPetSelectionView()
+                            .navigationBarBackButtonHidden(true)
+                            .navigationBarHidden(true),
+                        isActive: $navigateToChoosePet
+                    ) {
+                        Button(action: saveUserData) {
                             Text("continue")
                                 .font(.custom("Saira Stencil One", size: 20))
                                 .foregroundColor(.black)
@@ -91,6 +97,7 @@ struct SignupView: View {
                                 .cornerRadius(15)
                                 .shadow(color: Color.black.opacity(0.25), radius: 4, y: 4)
                         }
+                    }
                 }
                 .padding(.top, 20)
                 
@@ -102,40 +109,50 @@ struct SignupView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
     }
-}
-
-struct EditableInfoButton: View {
-    let textTitle: String
-    @Binding var text: String
-    let color: Color
     
-    var body: some View {
-        HStack {
-            Text(textTitle)
-                .font(.custom("Saira Stencil One", size: 24))
-                .foregroundColor(.white)
-            
-            Spacer()
-            
-            TextField("", text: $text)
-                .font(.custom("Saira Stencil One", size: 18))
-                .foregroundColor(.white)
-                .padding(.vertical, 6)
-                .padding(.horizontal, 10)
-                .frame(maxWidth: 120)
-                .background(Color.white.opacity(0.2))
-                .cornerRadius(4)
-        }
-        .padding(.horizontal, 20)
-        .frame(height: 50)
-        .background(color)
-        .cornerRadius(8)
-        .shadow(color: Color.black.opacity(0.25), radius: 4, y: 4)
+    private func saveUserData() {
+        UserDefaults.standard.set(username, forKey: "username")
+        UserDefaults.standard.set(password, forKey: "password")
+        UserDefaults.standard.set(name, forKey: "name")
+        UserDefaults.standard.set(age, forKey: "age")
+        UserDefaults.standard.set(gender, forKey: "gender")
+        navigateToChoosePet = true // Navigate to ChoosePetView
     }
-}
-
-struct SignupView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignupView()
+    
+    struct EditableInfoButton: View {
+        let textTitle: String
+        @Binding var text: String
+        let color: Color
+        
+        var body: some View {
+            HStack {
+                Text(textTitle)
+                    .font(.custom("Saira Stencil One", size: 24))
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                TextField("", text: $text)
+                    .font(.custom("Saira Stencil One", size: 18))
+                    .foregroundColor(.white)
+                    .padding(.vertical, 6)
+                    .padding(.horizontal, 10)
+                    .frame(maxWidth: 120)
+                    .background(Color.white.opacity(0.2))
+                    .cornerRadius(4)
+            }
+            .padding(.horizontal, 20)
+            .frame(height: 50)
+            .background(color)
+            .cornerRadius(8)
+            .shadow(color: Color.black.opacity(0.25), radius: 4, y: 4)
+        }
+    }
+    
+    
+    struct SignupView_Previews: PreviewProvider {
+        static var previews: some View {
+            SignupView()
+        }
     }
 }
